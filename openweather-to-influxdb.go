@@ -13,7 +13,7 @@ import (
 	"github.com/influxdata/influxdb-client-go/v2/api"
 )
 
-type ConfigurationInfluxDb struct {
+type ConfigurationInfluxDB struct {
 	ServerUrl   string `json:"serverUrl"`
 	Token       string `json:"token"`
 	Bucket      string `json:"bucket"`
@@ -22,7 +22,7 @@ type ConfigurationInfluxDb struct {
 }
 
 type Configuration struct {
-	InfluxDb ConfigurationInfluxDb `json:"influxDb"`
+	InfluxDB ConfigurationInfluxDB `json:"influxDB"`
 }
 
 type OpenWeatherDataCoord struct {
@@ -102,11 +102,11 @@ func main() {
 
 	// create new client with default option for server url authenticate by token
 	client := influxdb2.NewClientWithOptions(
-		config.InfluxDb.ServerUrl,
-		config.InfluxDb.Token,
+		config.InfluxDB.ServerUrl,
+		config.InfluxDB.Token,
 		influxdb2.DefaultOptions().SetBatchSize(20))
 	// user blocking write client for writes to desired bucket
-	writeAPI := client.WriteAPI(config.InfluxDb.Org, config.InfluxDb.Bucket)
+	writeAPI := client.WriteAPI(config.InfluxDB.Org, config.InfluxDB.Bucket)
 
 	for _, filename := range sourceFiles {
 		fmt.Println(filename)
@@ -151,7 +151,7 @@ func doIt(config *Configuration, filename string, writeAPI api.WriteAPI, city st
 		panic(err)
 	}
 
-	point := influxdb2.NewPointWithMeasurement(config.InfluxDb.Measurement)
+	point := influxdb2.NewPointWithMeasurement(config.InfluxDB.Measurement)
 	point.
 		AddTag("Stadt", city).
 		AddField("Temperatur", openWeatherData.Main.Temp).
