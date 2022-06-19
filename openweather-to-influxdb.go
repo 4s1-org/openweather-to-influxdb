@@ -152,10 +152,14 @@ func doIt(config *Configuration, filename string, writeAPI api.WriteAPI, city st
 	point := influxdb2.NewPointWithMeasurement(config.InfluxDB.Measurement)
 	point.
 		AddTag("Stadt", city).
-		AddField("Temperatur", openWeatherData.Main.Temp).
-		AddField("Temperatur (gefühlt)", openWeatherData.Main.FeelsLike).
-		AddField("Luftdruck", openWeatherData.Main.Pressure).
-		AddField("Windgeschwindigkeit", openWeatherData.Wind.Speed).
+		AddField("Temperatur [°C]", openWeatherData.Main.Temp).
+		AddField("Temperatur (gefühlt) [°C]", openWeatherData.Main.FeelsLike).
+		AddField("Luftdruck [hPa]", openWeatherData.Main.Pressure).
+		AddField("Luftfeuchtigkeit [%]", openWeatherData.Main.Humidity).
+		AddField("Windgeschwindigkeit [m/s]", openWeatherData.Wind.Speed).
+		AddField("Windrichtung [Grad]", openWeatherData.Wind.Deg).
+		AddField("Bewölkung [%]", openWeatherData.Clouds.All).
+		AddField("Sichtweite [km]", openWeatherData.Visibility).
 		SetTime(time.Unix(openWeatherData.Dt, 0))
 	writeAPI.WritePoint(point)
 }
