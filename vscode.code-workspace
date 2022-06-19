@@ -12,6 +12,6 @@
       }
     },
     "go.formatTool": "gofmt",
-    "window.title": "openweater-to-influxdb"
+    "window.title": "OpenWeather"
   }
 }
